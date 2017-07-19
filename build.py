@@ -40,7 +40,7 @@ VERSIONS = (
 ```
 Run `./build.py`, which will download and prepare the files. (this may take ~2
 mins). Then, run `python setup.py vapour_linux_amd64:0.1 sdist upload` (or any
-other vapour_<platform>:<version> combination) and login with the proper PyPi
+other `vapour_<platform>:<version>` combination) and login with the proper PyPi
 credentials.
 
 
@@ -55,7 +55,7 @@ Built on: {time}
     table = ''
     for d, bin in result:
         digest = hashlib.sha256(bin).hexdigest()
-        name = '{tool} ({platform})'.format(tool=d['tool'], platform=d['platform'])
+        name = '**{tool}** ({platform})'.format(tool=d['tool'], platform=d['platform'])
         version = d['version']
         table += '| {name} | {version} | {digest} |\n'.format(
             name=name,
@@ -88,7 +88,7 @@ def main():
             platform_results[d['platform']] = []
             platform_result = platform_results[d['platform']]
         platform_result.append((d, bin_data))
-    
+
     for platform, d_and_bins in platform_results.items():
         ppath = 'vapour_' + platform
         if not os.path.exists(ppath):
