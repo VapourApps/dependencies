@@ -32,7 +32,7 @@ and then uploads them to PyPi.
 
 ## Update or add dependencies
 Edit the `build.py` with the wanted dependencies:
-```
+```python
 VERSIONS = (
     ('terraform', '0.9.11'),
     ('consul', '0.8.5')

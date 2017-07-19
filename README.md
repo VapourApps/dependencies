@@ -3,17 +3,20 @@ This project builds zip files with executable dependencies for the master's runt
 
 ## Update or add dependencies
 Edit the `build.py` with the wanted dependencies:
-```
+```python
 VERSIONS = (
     ('terraform', '0.9.11'),
     ('consul', '0.8.5')
 )
 ```
-Run `build.py`, which will download and create zips and update this README.
-Then, do a commit and a GitHub release.
+Run `./build.py`, which will download and prepare the files. (this may take ~2
+mins). Then, run `python setup.py vapour_linux_amd64:0.1 sdist upload` (or any
+other vapour_<platform>:<version> combination) and login with the proper PyPi
+credentials.
+
 
 ## Currently shipping
-Built on: 2017-07-19 15:07:02.761506
+Built on: 2017-07-19 15:14:18.601188
 
 | Name | Version | SHA256 |
 | ---  | ------- | -----  |
