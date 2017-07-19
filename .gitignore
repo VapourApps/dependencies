@@ -1,0 +1,10 @@
+*.zip
+build/
+dist/
+eggs/
+*.egg-info/
+*.egg
+eggs/
+.eggs/
+pip-log.txt
+__init__.py
