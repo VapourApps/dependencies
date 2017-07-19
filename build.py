@@ -6,6 +6,8 @@ import urllib2
 import StringIO
 import datetime
 import hashlib
+import argparse
+import subprocess
 
 VERSIONS = (
     ('terraform', '0.9.11'),
@@ -65,7 +67,25 @@ Built on: {time}
     with open('README.md', 'w') as myf:
         myf.write(TEMPLATE.format(time=t, table=table))
 
-def main():
+def pypi_upload(ppath, pypi_version):
+    TEMPLATE = '''from setuptools import setup
+setup(
+    name='{name}',
+    packages=['{name}'],
+    package_data={{'{name}': ['*.zip']}},
+    version='{ver}',
+    description='This package contains binary executable dependencies for the master.',
+    author='VapourApps',
+    author_email='vapour@vapour.com'
+)'''
+    with open('setup.py', 'w') as setupf:
+        setup_content = TEMPLATE.format(
+            name=ppath,
+            ver=pypi_version
+        )
+        setupf.write(setup_content)
+    subprocess.check_output(['python', 'setup.py', 'sdist', 'upload'])
+def main(pypi_version):
     p = multiprocessing.Pool(4)
     data = []
     for tool, version in VERSIONS:
@@ -103,6 +123,11 @@ def main():
                 if 'windows' in d['platform']: name+= '.exe'
                 if 'linux' in d['platform']: name+= '.bin'
                 myzip.writestr(name, bin)
+        print('Uploading {} to PyPi...'.format(zip_path))
+        pypi_upload(ppath, pypi_version)
     print('Done.')
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('version')
+    args = parser.parse_args()
+    main(args.version)

@@ -1,4 +1,5 @@
 *.zip
+setup.py
 build/
 dist/
 eggs/
